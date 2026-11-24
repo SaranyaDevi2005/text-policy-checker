@@ -36,7 +36,7 @@ def check(text: str, policy: str) -> dict:
             "types": detected_types,
             "decision": "blocked",
             "text": None,
-            "redaction_count": redaction_count,
+            "redaction_count": 0,
         }
 
     # policy == "redact"
