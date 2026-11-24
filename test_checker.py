@@ -103,6 +103,14 @@ class TestEmailPrivacyChecker(unittest.TestCase):
         self.assertEqual(result["types"], ["email"])
         self.assertEqual(result["redaction_count"], 3)
 
+    def test_block_regression_redaction_count_zero(self):
+        text = "Contact user1@example.com or user2@example.org for inquiries."
+        result = check(text, "block")
+        self.assertEqual(result["decision"], "blocked")
+        self.assertIsNone(result["text"])
+        self.assertIn("email", result["types"])
+        self.assertEqual(result["redaction_count"], 0)
+
     # -------------------------------------------------------------------------
     # Policy Validation
     # -------------------------------------------------------------------------
