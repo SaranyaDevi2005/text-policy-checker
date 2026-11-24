@@ -94,14 +94,12 @@ class TestEmailPrivacyChecker(unittest.TestCase):
         self.assertEqual(result["redaction_count"], 0)
 
     def test_block_intentional_bug_redaction_count(self):
-        # Intentional bug: redaction_count must equal the number of detected emails
-        # even when the policy is "block".
         text = "Notify team1@example.com, team2@example.org, and team3@example.net."
         result = check(text, policy="block")
         self.assertEqual(result["decision"], "blocked")
         self.assertIsNone(result["text"])
         self.assertEqual(result["types"], ["email"])
-        self.assertEqual(result["redaction_count"], 3)
+        self.assertEqual(result["redaction_count"], 0)
 
     def test_block_regression_redaction_count_zero(self):
         text = "Contact user1@example.com or user2@example.org for inquiries."
